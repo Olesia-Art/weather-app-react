@@ -5,16 +5,16 @@ export default function Cities() {
   return (
     <ul className="cities">
       <li className="city">
-        <a href="#">Kyiv</a>
+        <button>Kyiv</button>
       </li>
       <li className="city">
-        <a href="#">Paris</a>
+        <button>Paris</button>
       </li>
       <li className="city">
-        <a href="#">Krakow</a>
+        <button>Krakow</button>
       </li>
       <li className="city">
-        <a href="#">Berlin</a>
+        <button>Berlin</button>
       </li>
     </ul>
   );

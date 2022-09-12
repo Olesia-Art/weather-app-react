@@ -14,13 +14,10 @@ export default function Details() {
           />
           <span className="temperature">19</span>
           <span className="temperature-units">
-            <a href="#" id="celsius" className="active">
+            <button id="celsius" className="active">
               °C
-            </a>{" "}
-            |
-            <a href="#" id="fahrenheit">
-              °F
-            </a>
+            </button>{" "}
+            |<button id="fahrenheit">°F</button>
           </span>
         </div>
       </div>
