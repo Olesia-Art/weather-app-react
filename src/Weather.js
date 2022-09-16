@@ -1,75 +1,94 @@
-import React from "react";
+import React, { useState } from "react";
 import Cities from "./Cities";
+import axios from "axios";
 import "./Weather.css";
 
-export default function Weather() {
-  return (
-    <div className="Weather">
-      <Cities />
-      <br />
-      <form className="search-form" id="searchCity">
+export default function Weather(props) {
+  const [weatherData, setWeatherData] = useState({ ready: false });
+
+  function handleResponse(response) {
+    setWeatherData({
+      ready: true,
+      description: response.data.weather[0].description,
+      date: "Wednesday 19:00",
+      temperature: Math.round(response.data.main.temp),
+      wind: Math.round(response.data.wind.speed),
+      city: response.data.name,
+      humidity: response.data.main.humidity,
+      imageUrl: `http://openweathermap.org/img/wn/10d@2x.png`,
+    });
+  }
+
+  if (weatherData.ready) {
+    return (
+      <div className="Weather">
+        <Cities />
+        <br />
+        <form className="search-form" id="searchCity">
+          <div className="row">
+            <span className="col-6">
+              <input
+                type="search"
+                placeholder="Enter a city"
+                id="search-text-input"
+                autocomplete="off"
+                autoFocus="on"
+                className="form-control shadow-sm"
+              />
+            </span>
+            <span className="col-2">
+              <input
+                type="submit"
+                value="Search"
+                className="search btn btn-primary "
+              />
+            </span>
+            <span className="col-2">
+              <input
+                type="submit"
+                value="Current position"
+                className="btn btn-success"
+                id="currentButton"
+              />
+            </span>
+          </div>
+        </form>
+        <h1 id="city">{weatherData.city}</h1>
+        <ul>
+          <li>{weatherData.date}</li>
+          <li className="text-capitalize">{weatherData.description}</li>
+        </ul>
         <div className="row">
-          <span className="col-6">
-            <input
-              type="search"
-              placeholder="Enter a city"
-              id="search-text-input"
-              autocomplete="off"
-              autoFocus="on"
-              className="form-control shadow-sm"
+          <div className="col-6">
+            <img
+              src={weatherData.imageUrl}
+              alt={weatherData.description}
+              id="image"
+              className="float-left"
             />
-          </span>
-          <span className="col-2">
-            <input
-              type="submit"
-              value="Search"
-              className="search btn btn-primary "
-            />
-          </span>
-          <span className="col-2">
-            <input
-              type="submit"
-              value="Current position"
-              className="btn btn-success"
-              id="currentButton"
-            />
-          </span>
-        </div>
-      </form>
-      <h1 id="city">Kyiv</h1>
-      <ul>
-        <li>Monday 12:30</li>
-        <li>Cloudy</li>
-      </ul>
-      <div className="row">
-        <div className="col-6">
-          <img
-            src="http://openweathermap.org/img/wn/10d@2x.png"
-            alt=""
-            id="image"
-            className="float-left"
-          />
-          <span className="temperature">19</span>
-          <span className="temperature-units">
-            <button id="celsius" className="active">
-              °C
-            </button>{" "}
-            |<button id="fahrenheit">°F</button>
-          </span>
-        </div>
-        <div className="col-6">
-          <ul className="applications">
-            <li>
-              Humidity: <span id="humidity">66</span>%
-            </li>
-            <li>
-              {" "}
-              Wind: <span id="wind">8</span> km/h
-            </li>
-            <li>Precipitation: 13%</li>
-          </ul>
+            <span className="temperature">{weatherData.temperature}</span>
+            <span className="temperature-units">
+              <button id="celsius" className="active">
+                °C
+              </button>{" "}
+              |<button id="fahrenheit">°F</button>
+            </span>
+          </div>
+          <div className="col-6">
+            <ul className="applications">
+              <li>Humidity: {weatherData.humidity}%</li>
+              <li> Wind: {weatherData.wind} km/h</li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    const apiKey = "cfe05abaf5b67a4bfcbf2eff8aa44335";
+
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${props.defaultCity}&appid=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(handleResponse);
+
+    return "Loading...";
+  }
 }
