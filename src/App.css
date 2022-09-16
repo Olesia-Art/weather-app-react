@@ -1,60 +1,10 @@
-h1 {
-  font-size: 35px;
-}
-
-h2,
-h3 {
-  font-size: 20px;
-}
-
-.applications {
-  font-size: 16px;
-}
-
 .container {
   max-width: 800px;
   margin: 0 auto;
   padding: 60px;
 }
 
-.cities {
-  font-size: 18px;
-  padding: 0;
-}
-
-.city {
-  list-style: none;
-  display: inline;
-  padding: 10px 5px;
-}
-
-.temperature {
-  font-size: 50px;
-  font-weight: 400;
-  line-height: 1;
-}
-
-.temperature-units {
-  position: relative;
-  top: -28px;
-}
-
-.image {
-  font-size: 50px;
-  font-weight: 400;
-  line-height: 1;
-}
-
-.row {
-  margin-bottom: 30px;
-}
-
-.search-form {
-  margin-bottom: 20px;
-}
-
-.Weather {
-  padding: 20px;
-  border: 1px solid #dadde1;
-  border-radius: 5px;
+.App footer {
+  font-size: 12px;
+  margin: 5px 0;
 }
