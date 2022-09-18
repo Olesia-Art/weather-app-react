@@ -17,7 +17,7 @@ export default function Weather(props) {
       wind: Math.round(response.data.wind.speed),
       city: response.data.name,
       humidity: response.data.main.humidity,
-      imageUrl: `http://openweathermap.org/img/wn/10d@2x.png`,
+      image: response.data.weather[0].icon,
     });
   }
 
@@ -73,6 +73,7 @@ export default function Weather(props) {
             </span>
           </div>
         </form>
+
         <WeatherInfo data={weatherData} />
       </div>
     );
