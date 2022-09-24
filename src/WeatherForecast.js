@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import WeatherImage from "./WeatherImage";
 import "./WeatherForecast.css";
 import axios from "axios";
-import { useState } from "react";
+import WeatherForecastDay from "./WeatherForecastDay";
 
 export default function WeatherForecast(props) {
   let [loaded, setLoaded] = useState(false);
@@ -17,22 +16,23 @@ export default function WeatherForecast(props) {
     return (
       <div className="WeatherForecast">
         <div className="row">
-          <div className="col-2">
-            <div className="WeatherForecast-day"> Thu </div>
-            <WeatherImage code="01d" size={30} />
-            <div className="WeatherForecast-temperature">
-              <span className="WeatherForecast-temperature-max">19°</span>
-              <span className="WeatherForecast-temperature-min">8°</span>
-            </div>
-          </div>
+          {forecast.map(function(dailyForecast, index) {
+            if (index < 5) {
+              return (
+                <div className="col" key={index}>
+                  <WeatherForecastDay data={dailyForecast} />
+                </div>
+              );
+            }
+          })}
         </div>
       </div>
     );
   } else {
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+    let lon = props.coordinates.lon;
+    let lat = props.coordinates.lat;
     let apiKey = "cfe05abaf5b67a4bfcbf2eff8aa44335";
-    let lon = props.coord.lon;
-    let lat = props.coord.lat;
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
 
     axios.get(apiUrl).then(handleResponce);
 
